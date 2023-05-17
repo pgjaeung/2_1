@@ -8,52 +8,79 @@ from shellSort import *
 import random
 import time
 import sys
+import matplotlib.pyplot as plt
 
 sys.setrecursionlimit(10**6)
 roof = 1000
 
-B=[]
-for value in range(0, 300):
-    B.append(random.randint(0,100))
-
-A=B.copy()
+#======================SelectionSort==========================
 start = time.time()
-selectionSort(A)
+for _ in range(roof):
+    A = [random.randint(0, 100) for _ in range(300)]
+    selectionSort(A)
 end = time.time()
-print('Selection sort (recusive) Processing Time : ', end-start)
+selectionS = (end-start)/roof
+print('Selection sort avg (recusive) Processing Time : ', selectionS)
 
-A=B.copy()
+#=======================BubbleSort============================
 start = time.time()
-bubbleSort(A)
+for _ in range(roof):
+    A = [random.randint(0, 100) for _ in range(300)]
+    bubbleSort(A)
 end = time.time()
-print('Bubble sort (recusive) Processing Time : ', end-start)
+bubbleS = (end-start)/roof
+print('Bubble sort avg (recusive) Processing Time : ', bubbleS)
 
-A=B.copy()
+#=======================InsertSort============================
 start = time.time()
-insertSort(A,len(A))
+for i in range(roof):
+    A = [random.randint(0, 100) for _ in range(300)]
+    insertSort(A, len(A))
 end = time.time()
-print('Insert sort (recusive) Processing Time : ', end-start)
+insertS = (end-start)/roof
+print('Insert sort avg (recusive) Processing Time : ', insertS)
 
-A=B.copy()
+#=======================MergeSort=============================
 start = time.time()
-mergeSort(A)
+for _ in range(roof):
+    A = [random.randint(0, 100) for _ in range(300)]
+    mergeSort(A)
 end = time.time()
-print('Merge sort (recusive) Processing Time : ', end-start)
+mergeS = (end-start)/roof
+print('Merge sort avg (recusive) Processing Time : ', mergeS)
 
-A=B.copy()
+#======================QuickSort============================
 start = time.time()
-quickSort(A)
+for _ in range(roof):
+    A = [random.randint(0, 100) for _ in range(300)]
+    quickSort(A)
 end = time.time()
-print('Quick sort Processing Time : ', end-start)
+quickS = (end-start)/roof
+print('Quick sort avg Processing Time : ', quickS)
 
-A=B.copy()
+#======================HeapSort=============================
 start = time.time()
-heapSort(A)
+for _ in range(roof):
+    A = [random.randint(0, 100) for _ in range(300)]
+    heapSort(A)
 end = time.time()
-print('Heap sort Processing Time : ', end-start)
+heapS = (end-start)/roof
+print('Heap sort avg Processing Time : ', heapS)
 
-A=B.copy()
+#======================ShellSort============================
 start = time.time()
-shellSort(A)
+for _ in range(roof):
+    A = [random.randint(0, 100) for _ in range(300)]
+    shellSort(A)
 end = time.time()
-print('Shell sort Processing Time : ', end-start)
+shellS = (end-start)/roof
+print('Shell sort avg Processing Time : ', shellS)
+
+#======================그래프그리기===========================
+plt.title('Arrangements Time Comparison')
+plt.xlabel('name of each sort')
+plt.ylabel('time(sec)')
+x = ['Selection','Bubble','Insert','Merge','Quick','Heap','Shell']
+y = [selectionS, bubbleS, insertS, mergeS, quickS, heapS, shellS]
+plt.bar(x,y, color=['blue'],width=0.4)
+plt.show()
