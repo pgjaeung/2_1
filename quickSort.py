@@ -1,23 +1,20 @@
-def quickSort(arr):
-    # 재귀 함수의 종료 조건: 배열의 길이가 1 이하인 경우
-    if len(arr) <= 1:
-        return arr
+def quickSort(arr): # quickSort를 정의한다. 매개변수로 arr을 받는다
+    if len(arr) <= 1: # 배열의 길이가 1이하인 경우
+        return arr # arr을 리턴 (재귀함수 종료 조건)
 
-    pivot = arr[len(arr) // 2]  # 피벗을 배열의 중간 요소로 선택
-    left = []
-    right = []
-    equal = []
+    pivot = arr[len(arr) // 2]  # pivot변수를 배열의 중간 요소로 선택
+    left = [] # left 빈 리스트 생성
+    right = [] # right 빈 리스트 생성
+    equal = [] # equal 빈 리스트 생성
 
-    # 피벗을 기준으로 작은 값은 왼쪽, 큰 값은 오른쪽, 같은 값은 equal에 저장
-    for num in arr:
-        if num < pivot:
-            left.append(num)
-        elif num > pivot:
-            right.append(num)
-        else:
-            equal.append(num)
+    for num in arr: # num이 arr에 있으면
+        if num < pivot: # pivot보다 작은 값은
+            left.append(num) # left 리스트에 추가
+        elif num > pivot: # pivot보다 큰 값은
+            right.append(num) # right 리스트에 추가
+        else: # 둘 다 아닐경우(같을 경우)
+            equal.append(num) # equal 리스트에 추가
 
-    # 왼쪽과 오른쪽 부분 배열을 재귀적으로 정렬하고, 피벗과 같은 값을 결합하여 반환
-    return quickSort(left) + equal + quickSort(right)
+    return quickSort(left) + equal + quickSort(right) # left와 right를 재귀적으로 정렬하고 pivot과 같은 값을 결합하여 리턴
 
 
