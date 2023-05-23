@@ -1,1 +1,3 @@
-# Sort_In_Python
+computer structure
+logical of math
+developer oss
