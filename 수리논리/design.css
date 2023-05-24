@@ -1,0 +1,27 @@
+.chat-container {
+    width: 400px;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.chat-message {
+    margin-top: 5px;
+
+}
+
+.user-message {
+    color: rgb(0, 0, 0);
+}
+
+.bot-message {
+    color: green;
+}
+
+input[type="text"] {
+    margin-top: 15px;
+    width: 97%;
+    padding: 5px;
+    font-size: 14px;
+}
