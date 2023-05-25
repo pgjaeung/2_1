@@ -1,3 +1,3 @@
-#computer structure
-#mathematical logic
+#computer structure \n
+#mathematical logic \n
 #developer oss
