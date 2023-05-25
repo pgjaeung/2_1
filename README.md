@@ -1,3 +1,3 @@
-computer structure
-logical of math
-developer oss
+#computer structure
+#mathematical logic
+#developer oss
