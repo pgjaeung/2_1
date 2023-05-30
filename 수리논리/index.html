@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>ChatGPT 웹사이트</title>
+    <title>고등수학 증명</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <style>
         .chat-container {
             max-width: 600px;
@@ -14,28 +15,53 @@
             margin-bottom: 10px;
         }
         .user-message {
-            background-color: #f2f2f2;
+            border: 3px groove #63c5da;
+            padding: 5px;
         }
         .bot-message {
-            background-color: #e5f4e8;
+            background-color: #f2f2f2;
+            padding: 5px;
         }
-        input[type="text"] {
+        input[type=text] {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border-color: black;
+            border-radius: 30px;
+        }
+        #autoMaker{
+            padding : 3px;
+            position: absolute; width: 200px;
+            height: auto; background: white;
+            margin-top: 3px; cursor:pointer;
+        }
+        #autoMaker > div{
+            border : 1px solid #e6e6e6;
+            margin-top: 3px;
+        }
+        #autoMaker > div:hover{
+            background: #e6d1ff;
         }
     </style>
 </head>
 <body>
     <div class="chat-container">
-        <div class="message bot-message">안녕하세요! 무엇을 도와드릴까요?</div>
+        <h1>ChatGPT와 함께하는 고등수학 논리 증명</h1>
         <div id="chat-log"></div>
-        <input type="text" id="user-input" placeholder="메시지를 입력하세요" />
+        <input type="text" id="user-input" placeholder="메시지를 입력하세요..." />
+        <div id="autoMaker"></div>
     </div>
 
     <script>
         // ChatGPT와 상호작용하는 JavaScript 코드
+        var isComplete = false;
+        var ref = [
+            {key:'and', name:'∩'},
+            {key:'or', name:'∪'},
+            {key:'and', name:'∀'},
+            {key:'or', name:'∃'},
+    ];
         var chatLog = document.getElementById("chat-log");
         var userInput = document.getElementById("user-input");
 
@@ -46,11 +72,36 @@
             messageDiv.classList.add("message", className);
             chatLog.appendChild(messageDiv);
         }
-
+        
         function sendMessage() {
             var userMessage = userInput.value;
-            addMessage(userMessage, true);
-            userInput.value = "";
+            $('#user-input').keyup(function(){
+                if(userMessage != ''){
+                    var userMessage = userInput.value;
+                    $('#autoMaker').children().remove();
+
+                    ref.forEach(function(arg){
+                        if(arg.key.indexOf(userMessage) > -1){
+                            $('#autoMaker').append(
+                                $('<div>').text(arg.name).attr({'key':arg.key})
+                            );
+                        }
+                    });
+                    $('#autoMaker').children().each(function(){
+                        $(this).click(function(){
+                            $('#user-input').val($(this).text());
+                            $('#autoMaker').children().remove();
+                            isComplete = true;
+                        });
+                    });
+                } else{
+                    $('#autoMaker').children().remove();
+                }
+            });
+            if(userMessage!==""){
+                addMessage("User : "+userMessage, true);
+                userInput.value = "";
+            }
 
             // OpenAI API로 메시지 전송 및 응답 처리
             fetch("/chat", {
@@ -65,7 +116,16 @@
             .then(response => response.json())
             .then(data => {
                 var botMessage = data.message;
-                addMessage(botMessage, false);
+                if(botMessage.includes("Yes")){
+                    addMessage("Answer: Yes!",false);
+                }else if(botMessage.includes("No")){
+                    addMessage("Answer : No!",false);
+                }
+                if(botMessage === "Exiting..."){
+                    userInput.hidden=true;
+                }else{
+                    addMessage("ChatGPT : "+botMessage, false);
+                }
             });
         }
 
